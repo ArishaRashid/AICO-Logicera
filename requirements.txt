@@ -1,0 +1,35 @@
+# Core dependencies for AICO Web Summarization Agent
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+
+# LangChain and OpenAI integration
+langchain>=0.1.0
+langchain-openai>=0.1.0
+langchain-community>=0.0.20
+langchain-core>=0.1.0
+
+# LangGraph for advanced chain summarization
+langgraph>=0.0.40
+
+# Text processing and splitting
+langchain-text-splitters>=0.0.1
+tiktoken>=0.5.0
+
+# Web scraping and content extraction
+httpx>=0.25.0
+beautifulsoup4>=4.12.0
+readability-lxml>=0.8.1
+
+# HTTP requests and API handling
+requests>=2.31.0
+
+# Environment variable management
+python-dotenv>=1.0.0
+
+# Logging and utilities
+python-multipart>=0.0.6
+
+# Optional: For production deployment
+# redis>=5.0.0
+# celery>=5.3.0
