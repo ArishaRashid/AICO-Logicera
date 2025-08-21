@@ -249,6 +249,19 @@ def parse_structured_summary(summary_text: str) -> Dict[str, str]:
         if not summary:
             summary = summary_text.strip()
         
+        # Clean up the summary: remove newlines and key points section
+        if summary:
+            # Remove any remaining newlines and replace with spaces
+            summary = summary.replace('\n', ' ')
+            # Remove multiple spaces
+            summary = ' '.join(summary.split())
+            # Remove key points section if it appears in the summary
+            if "Key Points:" in summary:
+                summary = summary.split("Key Points:")[0].strip()
+            # Remove any trailing key points content
+            if "Summary:" in summary:
+                summary = summary.split("Summary:")[1].strip() if summary.split("Summary:")[1].strip() else summary
+        
         return {
             "main_topic": main_topic,
             "summary": summary

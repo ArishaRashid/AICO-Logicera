@@ -65,24 +65,24 @@ Now complete the task step by step:""")
                 # Convert text to Document format expected by LangChain
                 from langchain.schema import Document
                 documents = [Document(page_content=text)]
-                logger.info(f"📄 Converted to {len(documents)} documents for LangChain")
+                logger.info(f"Converted to {len(documents)} documents for LangChain")
                 result = chain.invoke({"input_documents": documents})
                 # Extract the text content from the chain output
-                logger.info(f"🔍 Chain output type: {type(result)}")
-                logger.info(f"🔍 Chain output content: {result}")
+                logger.info(f"Chain output type: {type(result)}")
+                logger.info(f"Chain output content: {result}")
                 if isinstance(result, dict) and "output_text" in result:
-                    logger.info("✅ Found output_text in dict result")
+                    logger.info("Found output_text in dict result")
                     return result["output_text"]
                 elif isinstance(result, str):
-                    logger.info("✅ Result is already a string")
+                    logger.info("Result is already a string")
                     return result
                 else:
-                    logger.warning(f"⚠️ Unexpected chain output format: {type(result)}")
-                    logger.warning(f"⚠️ Available keys: {list(result.keys()) if isinstance(result, dict) else 'N/A'}")
+                    logger.warning(f"Unexpected chain output format: {type(result)}")
+                    logger.warning(f"Available keys: {list(result.keys()) if isinstance(result, dict) else 'N/A'}")
                     return str(result)
             except Exception as e:
-                logger.error(f"❌ Error in stuff summarizer wrapper: {e}")
-                logger.error(f"❌ Input dict keys: {list(input_dict.keys())}")
+                logger.error(f"Error in stuff summarizer wrapper: {e}")
+                logger.error(f"Input dict keys: {list(input_dict.keys())}")
                 raise e
         
         from langchain_core.runnables import RunnableLambda
