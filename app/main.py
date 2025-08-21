@@ -142,11 +142,7 @@ class ErrorResponse(BaseModel):
     error: str
     message: str
 
-class HealthResponse(BaseModel):
-    """Health check response model."""
-    status: str
-    message: str
-    version: str
+
 
 # =============================================================================
 # API ENDPOINTS
