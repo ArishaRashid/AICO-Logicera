@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 def build_web_summarization_agent():
     """Build a simple web summarization agent that doesn't get stuck in loops."""
-    logger.info("🔧 Building simple web summarization agent...")
+    logger.info("Building simple web summarization agent...")
     
     # Initialize OpenAI LLM
     llm = ChatOpenAI(
@@ -31,7 +31,7 @@ def build_web_summarization_agent():
         return_messages=AGENT["return_messages"],
     )
     
-    logger.info("✅ Simple web summarization agent built successfully")
+    logger.info("Simple web summarization agent built successfully")
     return llm, memory
 
 def chat_with_agent_simple(message: str, url: str, llm, memory) -> Dict[str, Any]:
@@ -93,9 +93,27 @@ Response:"""
         # Get updated chat history
         updated_history = memory.load_memory_variables({})["chat_history"]
         
+        # Format chat history with proper role assignment
+        formatted_history = []
+        for i, msg in enumerate(updated_history):
+            if hasattr(msg, 'content'):
+                # Even indices are user messages, odd are assistant responses
+                role = "user" if i % 2 == 0 else "assistant"
+                formatted_history.append({
+                    "role": role,
+                    "content": msg.content
+                })
+            else:
+                # Fallback for messages without content attribute
+                role = "user" if i % 2 == 0 else "assistant"
+                formatted_history.append({
+                    "role": role,
+                    "content": str(msg)
+                })
+        
         return {
             "response": response.content,
-            "chat_history": [{"role": "user", "content": msg.content} if hasattr(msg, 'content') else {"role": "user", "content": str(msg)} for msg in updated_history],
+            "chat_history": formatted_history,
             "success": True,
             "message": "Chat response generated successfully"
         }
@@ -108,10 +126,6 @@ Response:"""
             "success": False,
             "message": "Error occurred"
         }
-
-# =============================================================================
-# ADVANCED SUMMARIZATION FUNCTIONS
-# =============================================================================
 
 def get_summarization_techniques() -> Dict[str, str]:
     """Get available summarization techniques."""
